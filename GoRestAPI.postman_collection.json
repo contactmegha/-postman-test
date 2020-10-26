@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "2b44c218-96aa-406e-8380-1fc6b8f6c46e",
+		"name": "GoRestAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PostUsers",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6943350d-f834-4f92-b44e-a61cdba8aee8",
+						"exec": [
+							"    var randomNum= Math.random().toString(36).substring(2, 5);\r",
+							"    var emailAddr=\"test_\"+randomNum+\"@test.com\";\r",
+							"    pm.environment.set(\"emailAddr\", \"emailAddr\");\r",
+							"    console.warn(emailAddr);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6e064820-7400-41d1-805d-440702a4a41e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Validate generated code\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"code\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate generated code value\", function () {\r",
+							"   var jsonData= pm.response.json();\r",
+							"   pm.expect(jsonData.code).equals(201);\r",
+							"});\r",
+							"pm.test(\"Validate random generated email address\", function () {\r",
+							"   var jsonData= pm.response.json();\r",
+							"   pm.expect(jsonData.data[0].email).equals( pm.environment.get(\"emailAddr\"));\r",
+							"\r",
+							"   \r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message validation for existing user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].message).to.eql(\"has already been taken\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1b04fcfd25ef82b45d03bea5a3e8704b0e01c06c3f1472cbf0eb48e322c68eb4",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Test Person\", \"gender\":\"Male\", \"email\":\"{{emailAddr}}\", \"status\":\"Active\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public-api/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public-api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
