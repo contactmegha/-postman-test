@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "959a0ee6-eaeb-4bb9-9c89-e29a463948fc",
+		"name": "DataDriven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "RegisterUser",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86cdf93d-c40e-4fa7-85b7-dffd3170d5ef",
+						"exec": [
+							"pm.test(\"validate password\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.password).to.eql(data[\"password\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"validate email\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email).to.eql(data[\"email\"]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{email}}\",\n\t\"password\":\"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{endpoint}}",
+					"host": [
+						"{{endpoint}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "174264e3-6535-43c5-8557-04f1ffe1a617",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a6aad57b-295b-420f-9096-c6585afc5b2a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0642e29c-b2e8-46af-bb41-ebaddf31a3ec",
+			"key": "endpoint",
+			"value": "https://reqres.in/api/register"
+		},
+		{
+			"id": "b2dc3b78-324b-4c4b-9ba7-7044743200c0",
+			"key": "email",
+			"value": "eve.test@reqres.in"
+		},
+		{
+			"id": "2caf4897-b255-4768-8296-4eea39819ee1",
+			"key": "password",
+			"value": "pistol"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
